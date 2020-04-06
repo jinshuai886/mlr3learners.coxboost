@@ -8,7 +8,7 @@ test_that("autotest", {
   expect_true(result, info = result$error)
 })
 
-test_that("optim",{
+test_that("optim", {
   set.seed(1)
   learner = lrn("surv.cvcoxboost", penalty = "optimCoxBoostPenalty",
                 maxstepno = 1, minstepno = 0, iter.max = 1, K = 2)
