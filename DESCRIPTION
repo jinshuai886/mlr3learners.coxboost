@@ -23,6 +23,7 @@ Suggests:
     checkmate,
     CoxBoost,
     distr6,
+    pracma,
     rmarkdown,
     testthat
 Remotes:
