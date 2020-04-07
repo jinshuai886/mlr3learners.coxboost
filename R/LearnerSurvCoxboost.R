@@ -40,10 +40,10 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
           ParamInt$new(id = "stepno", default = 100, lower = 0, tags = "train"),
           ParamDbl$new(id = "penalty", tags = "train"),
           ParamFct$new(id = "criterion", default = "pscore",
-                       levels = c("pscore", "score", "hpscore", "hscore"), tags = "train"),
+            levels = c("pscore", "score", "hpscore", "hscore"), tags = "train"),
           ParamDbl$new(id = "stepsize.factor", default = 1, tags = "train"),
           ParamFct$new(id = "sf.scheme", default = "sigmoid", levels = c("sigmoid", "linear"),
-                       tags = "train"),
+            tags = "train"),
           ParamUty$new(id = "pendistmat", tags = "train"),
           ParamUty$new(id = "connected.index", tags = "train"),
           ParamLgl$new(id = "x.is.01", default = FALSE, tags = "train"),
@@ -83,12 +83,12 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
       }
 
       with_package("CoxBoost", {
-        invoke(
+        mlr3misc::invoke(
           CoxBoost::CoxBoost,
           time = task$truth()[, 1],
           status = task$truth()[, 2],
           x = model.matrix(~.,
-                           as.data.frame(task$data(cols = task$feature_names)))[, -1, drop = FALSE],
+            as.data.frame(task$data(cols = task$feature_names)))[, -1, drop = FALSE],
           .args = pars
         )
       })
@@ -96,19 +96,19 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
 
     .predict = function(task) {
 
-      lp = as.numeric(invoke(predict,
+      lp = as.numeric(mlr3misc::invoke(predict,
         self$model,
         newdata = model.matrix(~.,
-                               as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                    drop = FALSE],
+          as.data.frame(task$data(cols = task$feature_names)))[, -1,
+          drop = FALSE],
         .args = self$param_set$get_values(tags = "predict"),
         type = "lp"))
 
-      cdf = invoke(predict,
+      cdf = mlr3misc::invoke(predict,
         self$model,
         newdata = model.matrix(~.,
-                               as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                    drop = FALSE],
+          as.data.frame(task$data(cols = task$feature_names)))[, -1,
+          drop = FALSE],
         .args = self$param_set$get_values(tags = "predict"),
         type = "CIF",
         times = sort(unique(self$model$time)))

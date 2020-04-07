@@ -41,7 +41,7 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
           ParamInt$new(id = "maxstepno", default = 100, lower = 0, tags = "train"),
           ParamInt$new(id = "K", default = 10, lower = 2, tags = "train"),
           ParamFct$new(id = "type", default = "verweij", levels = c("verweij", "naive"),
-                       tags = "train"),
+            tags = "train"),
           ParamUty$new(id = "folds", default = NULL, tags = "train"),
           ParamInt$new(id = "minstepno", default = 50, lower = 0, tags = "train"),
           ParamDbl$new(id = "start.penalty", tags = "train"),
@@ -51,10 +51,10 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
           ParamLgl$new(id = "standardize", default = TRUE, tags = "train"),
           ParamDbl$new(id = "penalty", special_vals = list("optimCoxBoostPenalty"), tags = "train"),
           ParamFct$new(id = "criterion", default = "pscore",
-                       levels = c("pscore", "score", "hpscore", "hscore"), tags = "train"),
+            levels = c("pscore", "score", "hpscore", "hscore"), tags = "train"),
           ParamDbl$new(id = "stepsize.factor", default = 1, tags = "train"),
           ParamFct$new(id = "sf.scheme", default = "sigmoid", levels = c("sigmoid", "linear"),
-                       tags = "train"),
+            tags = "train"),
           ParamUty$new(id = "pendistmat", tags = "train"),
           ParamUty$new(id = "connected.index", tags = "train"),
           ParamLgl$new(id = "x.is.01", default = FALSE, tags = "train"),
@@ -101,49 +101,49 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
           opt_pars = c("minstepno", "start.penalty", "iter.max", "upper.margin", "penalty")
           pars = pars[names(pars) %nin% opt_pars]
 
-          optim = invoke(
+          optim = mlr3misc::invoke(
             CoxBoost::optimCoxBoostPenalty,
             time = task$truth()[, 1],
             status = task$truth()[, 2],
             x = model.matrix(~.,
-                             as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                  drop = FALSE],
+              as.data.frame(task$data(cols = task$feature_names)))[, -1,
+              drop = FALSE],
             .args = pars
           )
 
           pars = pars[names(pars) %nin% c("maxstepno", "K", "type")]
 
-          return(invoke(
+          return(mlr3misc::invoke(
             CoxBoost::CoxBoost,
             time = task$truth()[, 1],
             status = task$truth()[, 2],
             x = model.matrix(~.,
-                             as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                  drop = FALSE],
+              as.data.frame(task$data(cols = task$feature_names)))[, -1,
+              drop = FALSE],
             stepno = optim$cv.res$optimal.step,
             penalty = optim$penalty,
             .args = pars
           ))
         } else {
-          optimal_step = invoke(
+          optimal_step = mlr3misc::invoke(
             CoxBoost::cv.CoxBoost,
             time = task$truth()[, 1],
             status = task$truth()[, 2],
             x = model.matrix(~.,
-                             as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                  drop = FALSE],
+              as.data.frame(task$data(cols = task$feature_names)))[, -1,
+              drop = FALSE],
             .args = pars
           )$optimal.step
 
           pars = pars[names(pars) %nin% c("maxstepno", "K", "type")]
 
-          return(invoke(
+          return(mlr3misc::invoke(
             CoxBoost::CoxBoost,
             time = task$truth()[, 1],
             status = task$truth()[, 2],
             x = model.matrix(~.,
-                             as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                  drop = FALSE],
+              as.data.frame(task$data(cols = task$feature_names)))[, -1,
+              drop = FALSE],
             stepno = optimal_step,
             .args = pars
           ))
@@ -153,19 +153,19 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
 
     .predict = function(task) {
 
-      lp = as.numeric(invoke(predict,
+      lp = as.numeric(mlr3misc::invoke(predict,
         self$model,
         newdata = model.matrix(~.,
-                               as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                    drop = FALSE],
+          as.data.frame(task$data(cols = task$feature_names)))[, -1,
+          drop = FALSE],
         .args = self$param_set$get_values(tags = "predict"),
         type = "lp"))
 
-      cdf = invoke(predict,
+      cdf = mlr3misc::invoke(predict,
         self$model,
         newdata = model.matrix(~.,
-                               as.data.frame(task$data(cols = task$feature_names)))[, -1,
-                                                                                    drop = FALSE],
+          as.data.frame(task$data(cols = task$feature_names)))[, -1,
+          drop = FALSE],
         .args = self$param_set$get_values(tags = "predict"),
         type = "CIF",
         times = sort(unique(self$model$time)))
