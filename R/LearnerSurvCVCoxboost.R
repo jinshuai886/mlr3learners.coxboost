@@ -91,10 +91,10 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
         pars$weights = as.numeric(task$weights$weight)
       }
 
-      pen_optim = if (is.null(ps$values$penalty))
+      pen_optim = if (is.null(pars$penalty))
         FALSE
       else
-        ps$values$penalty == "optimCoxBoostPenalty"
+        pars$penalty == "optimCoxBoostPenalty"
 
       opt_pars = self$param_set$get_values(tags = "optimPenalty")
       cv_pars = self$param_set$get_values(tags = "cvpars")
