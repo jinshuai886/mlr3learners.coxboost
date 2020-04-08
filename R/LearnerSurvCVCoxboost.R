@@ -39,7 +39,7 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
       ps = ParamSet$new(
         params = list(
           ParamInt$new(id = "maxstepno", default = 100, lower = 0,
-                       tags = c("train", "optimPenalty", "cvpars")),
+                       tags = c("train", "cvpars")),
           ParamInt$new(id = "K", default = 10, lower = 2, tags = c("train", "cvpars")),
           ParamFct$new(id = "type", default = "verweij", levels = c("verweij", "naive"),
             tags = c("train", "cvpars")),
@@ -85,22 +85,22 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
   private = list(
 
     .train = function(task) {
-      pars = self$param_set$get_values(tags = "train")
-
-      if ("weights" %in% task$properties) {
-        pars$weights = as.numeric(task$weights$weight)
-      }
-
-      pen_optim = if (is.null(pars$penalty))
-        FALSE
-      else
-        pars$penalty == "optimCoxBoostPenalty"
-
       opt_pars = self$param_set$get_values(tags = "optimPenalty")
       cv_pars = self$param_set$get_values(tags = "cvpars")
       cox_pars = setdiff(self$param_set$get_values(tags = "train"),
                          c(opt_pars, cv_pars))
 
+      if ("weights" %in% task$properties) {
+        cox_pars$weights = as.numeric(task$weights$weight)
+      }
+
+      pen_optim = FALSE
+      if (!is.null(opt_pars$penalty)) {
+        if (opt_pars$penalty == "optimCoxBoostPenalty") {
+          pen_optim = TRUE
+          opt_pars$penalty = NULL
+        }
+      }
 
       with_package("CoxBoost", {
         if (pen_optim) {

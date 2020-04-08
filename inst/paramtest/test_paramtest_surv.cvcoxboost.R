@@ -28,7 +28,7 @@ test_that("surv.cvcoxboost", {
 })
 
   # example for checking a "control" function of a learner
-  test_that("surv.cvcoxboost_control", {
+  test_that("surv.cvcoxboost_optimCoxBoostPenalty", {
     learner = lrn("surv.cvcoxboost")
     fun = CoxBoost::optimCoxBoostPenalty # replace!
     exclude = c("time", # coerced internally
@@ -42,4 +42,23 @@ test_that("surv.cvcoxboost", {
                   "\nMissing parameters:\n",
                   paste0("- '", ParamTest$missing, "'", collapse = "\n")
                 ))
+  })
+
+  test_that("surv.cvcoxboost_CoxBoost", {
+    learner = lrn("surv.cvcoxboost")
+    fun = CoxBoost::CoxBoost # replace!
+    exclude = c("time", # coerced internally
+                "status", # coerced internally
+                "x", # coerced internally
+                "parallel", # handled by future
+                "subset", # handled by task
+                "weights", # handled by task
+                "stepno" # optimised in cv.CoxBoost
+    )
+
+    ParamTest = run_paramtest(learner, fun, exclude)
+    expect_true(ParamTest, info = paste0(
+      "\nMissing parameters:\n",
+      paste0("- '", ParamTest$missing, "'", collapse = "\n")
+    ))
   })
