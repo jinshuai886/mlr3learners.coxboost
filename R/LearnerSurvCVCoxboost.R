@@ -38,20 +38,22 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
     initialize = function() {
       ps = ParamSet$new(
         params = list(
-          ParamInt$new(id = "maxstepno", default = 100, lower = 0, tags = c("train","optimPenalty","cvpars")),
-          ParamInt$new(id = "K", default = 10, lower = 2, tags = c("train","cvpars")),
+          ParamInt$new(id = "maxstepno", default = 100, lower = 0,
+                       tags = c("train", "optimPenalty", "cvpars")),
+          ParamInt$new(id = "K", default = 10, lower = 2, tags = c("train", "cvpars")),
           ParamFct$new(id = "type", default = "verweij", levels = c("verweij", "naive"),
-            tags = c("train","cvpars")),
-          ParamUty$new(id = "folds", default = NULL, tags = c("train","cvpars")),
-          ParamInt$new(id = "minstepno", default = 50, lower = 0, tags = c("train","optimPenalty")),
-          ParamDbl$new(id = "start.penalty", tags = c("train","optimPenalty")),
-          ParamInt$new(id = "iter.max", default = 10, lower = 1, tags = c("train","optimPenalty")),
+            tags = c("train", "cvpars")),
+          ParamUty$new(id = "folds", default = NULL, tags = c("train", "cvpars")),
+          ParamInt$new(id = "minstepno", default = 50, lower = 0,
+                       tags = c("train", "optimPenalty")),
+          ParamDbl$new(id = "start.penalty", tags = c("train", "optimPenalty")),
+          ParamInt$new(id = "iter.max", default = 10, lower = 1, tags = c("train", "optimPenalty")),
           ParamDbl$new(id = "upper.margin", default = 0.05, lower = 0, upper = 1,
-                       tags = c("train","optimPenalty")),
+                       tags = c("train", "optimPenalty")),
           ParamUty$new(id = "unpen.index", tags = "train"),
           ParamLgl$new(id = "standardize", default = TRUE, tags = "train"),
           ParamDbl$new(id = "penalty", special_vals = list("optimCoxBoostPenalty"),
-                       tags = c("train","optimPenalty")),
+                       tags = c("train", "optimPenalty")),
           ParamFct$new(id = "criterion", default = "pscore",
             levels = c("pscore", "score", "hpscore", "hscore"), tags = "train"),
           ParamDbl$new(id = "stepsize.factor", default = 1, tags = "train"),
@@ -89,7 +91,10 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
         pars$weights = as.numeric(task$weights$weight)
       }
 
-      pen_optim = if (is.null(ps$values$penalty)) FALSE else ps$values$penalty == "optimCoxBoostPenalty"
+      pen_optim = if (is.null(ps$values$penalty))
+        FALSE
+      else
+        ps$values$penalty == "optimCoxBoostPenalty"
 
       opt_pars = self$param_set$get_values(tags = "optimPenalty")
       cv_pars = self$param_set$get_values(tags = "cvpars")
