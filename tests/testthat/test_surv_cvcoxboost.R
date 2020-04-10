@@ -10,7 +10,8 @@ test_that("autotest", {
 
 test_that("optim", {
   set.seed(1)
-  learner = lrn("surv.cvcoxboost", penalty = "optimCoxBoostPenalty",
+  learner = lrn("surv.cvcoxboost",
+    penalty = "optimCoxBoostPenalty",
     maxstepno = 1, minstepno = 0, iter.max = 1, K = 2)
   task = tgen("simsurv")$generate(10)
   expect_prediction_surv(suppressWarnings(learner$train(task)$predict(task)))

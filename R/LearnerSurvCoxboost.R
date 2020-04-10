@@ -39,10 +39,12 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
           ParamLgl$new(id = "standardize", default = TRUE, tags = "train"),
           ParamInt$new(id = "stepno", default = 100, lower = 0, tags = "train"),
           ParamDbl$new(id = "penalty", tags = "train"),
-          ParamFct$new(id = "criterion", default = "pscore",
+          ParamFct$new(
+            id = "criterion", default = "pscore",
             levels = c("pscore", "score", "hpscore", "hscore"), tags = "train"),
           ParamDbl$new(id = "stepsize.factor", default = 1, tags = "train"),
-          ParamFct$new(id = "sf.scheme", default = "sigmoid", levels = c("sigmoid", "linear"),
+          ParamFct$new(
+            id = "sf.scheme", default = "sigmoid", levels = c("sigmoid", "linear"),
             tags = "train"),
           ParamUty$new(id = "pendistmat", tags = "train"),
           ParamUty$new(id = "connected.index", tags = "train"),
@@ -74,7 +76,6 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
   ),
 
   private = list(
-
     .train = function(task) {
       pars = self$param_set$get_values(tags = "train")
 
@@ -87,7 +88,8 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
           CoxBoost::CoxBoost,
           time = task$truth()[, 1],
           status = task$truth()[, 2],
-          x = model.matrix(~.,
+          x = model.matrix(
+            ~.,
             as.data.frame(task$data(cols = task$feature_names)))[, -1, drop = FALSE],
           .args = pars
         )
@@ -98,7 +100,8 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
 
       lp = as.numeric(mlr3misc::invoke(predict,
         self$model,
-        newdata = model.matrix(~.,
+        newdata = model.matrix(
+          ~.,
           as.data.frame(task$data(cols = task$feature_names)))[, -1,
           drop = FALSE],
         .args = self$param_set$get_values(tags = "predict"),
@@ -106,7 +109,8 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
 
       cdf = mlr3misc::invoke(predict,
         self$model,
-        newdata = model.matrix(~.,
+        newdata = model.matrix(
+          ~.,
           as.data.frame(task$data(cols = task$feature_names)))[, -1,
           drop = FALSE],
         .args = self$param_set$get_values(tags = "predict"),
@@ -119,7 +123,8 @@ LearnerSurvCoxboost = R6Class("LearnerSurvCoxboost",
         x[[i]]$cdf = cdf[i, ]
       }
 
-      distr = distr6::VectorDistribution$new(distribution = "WeightedDiscrete", params = x,
+      distr = distr6::VectorDistribution$new(
+        distribution = "WeightedDiscrete", params = x,
         decorators = c("CoreStatistics", "ExoticStatistics"))
 
       PredictionSurv$new(task = task, crank = lp, distr = distr, lp = lp)
