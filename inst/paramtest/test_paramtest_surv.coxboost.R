@@ -1,4 +1,4 @@
-library(mlr3learners.CoxBoost)
+library(mlr3learners.coxboost)
 
 test_that("surv.coxboost", {
   learner = lrn("surv.coxboost")

@@ -84,7 +84,7 @@ LearnerSurvCVCoxboost = R6Class("LearnerSurvCVCoxboost",
         param_set = ps,
         properties = "weights",
         # the help file name is the one used as @name in the roxygen2 block
-        man = "mlr3learners.CoxBoost::mlr_learners_surv.cvcoxboost"
+        man = "mlr3learners.coxboost::mlr_learners_surv.cvcoxboost"
       )
     }
   ),

@@ -15,7 +15,6 @@ register_mlr3 = function(libname, pkgname) {
   # add the learner to the dictionary
   x$add("surv.coxboost", LearnerSurvCoxboost)
   x$add("surv.cvcoxboost", LearnerSurvCVCoxboost)
-  # Example: x$add("regr.gamboost", LearnerRegrGAMBoost)
 }
 
 .onLoad = function(libname, pkgname) { # nolint
@@ -28,7 +27,7 @@ register_mlr3 = function(libname, pkgname) {
   event = packageEvent("mlr3", "onLoad")
   hooks = getHook(event)
   pkgname = vapply(hooks, function(x) environment(x)$pkgname, NA_character_)
-  setHook(event, hooks[pkgname != "mlr3learners.CoxBoost"],
+  setHook(event, hooks[pkgname != "mlr3learners.coxboost"],
     action = "replace")
 }
 # nocov end

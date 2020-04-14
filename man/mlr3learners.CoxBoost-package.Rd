@@ -9,6 +9,13 @@
 Adds learners from the {CoxBoost} package to
     'mlr3'.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/mlr3learners/mlr3learners.coxboost}
+}
+
+}
 \author{
 \strong{Maintainer}: Raphael Sonabend \email{raphael.sonabend.15@ucl.ac.uk}
 

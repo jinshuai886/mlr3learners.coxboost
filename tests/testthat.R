@@ -1,4 +1,4 @@
 library(testthat)
-library(mlr3learners.CoxBoost)
+library(mlr3learners.coxboost)
 
-test_check("mlr3learners.CoxBoost")
+test_check("mlr3learners.coxboost")
