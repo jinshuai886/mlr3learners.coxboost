@@ -21,6 +21,7 @@ Imports:
     R6,
     survival
 Suggests:
+    bibtex,
     checkmate,
     CoxBoost,
     distr6,
