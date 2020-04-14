@@ -9,6 +9,7 @@ Authors@R:
 Description: Adds learners from the {CoxBoost} package to
     'mlr3'.
 License: LGPL-3
+URL: https://github.com/mlr3learners/mlr3learners.coxboost
 Depends:
     R (>= 3.1.0)
 Imports:
