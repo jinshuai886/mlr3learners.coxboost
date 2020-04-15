@@ -29,6 +29,8 @@ Suggests:
     rmarkdown,
     simsurv,
     testthat
+RdMacros:
+    mlr3misc
 Remotes:
     mlr-org/mlr3proba
 Encoding: UTF-8
