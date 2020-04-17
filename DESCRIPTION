@@ -16,7 +16,7 @@ Imports:
     data.table,
     mlr3 (>= 0.1.7),
     mlr3misc,
-    mlr3proba (>= 0.1.4.9000),
+    mlr3proba (>= 0.1.5),
     paradox,
     R6,
     survival
@@ -31,8 +31,6 @@ Suggests:
     testthat
 RdMacros:
     mlr3misc
-Remotes:
-    mlr-org/mlr3proba
 Encoding: UTF-8
 NeedsCompilation: no
 Roxygen: list(markdown = TRUE)
