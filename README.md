@@ -1,8 +1,9 @@
 # mlr3learners.coxboost
 
 <!-- badges: start -->
-
+[![tic](https://github.com/mlr3learners/mlr3learners.coxboost/workflows/tic/badge.svg?branch=master)](https://github.com/mlr3learners/mlr3learners.coxboost/actions)
 [![R CMD Check via {tic}](https://github.com/mlr3learners/mlr3learners.coxboost/workflows/R%20CMD%20Check%20via%20{tic}/badge.svg?branch=master)](https://github.com/mlr3learners/mlr3learners.coxboost/actions)
+![mlr3learners.drat](https://github.com/mlr3learners/mlr3learners.coxboost/workflows/mlr3learners.drat/badge.svg?branch=master)
 [![Parameter Check](https://github.com/mlr3learners/mlr3learners.coxboost/workflows/Parameter%20Check/badge.svg?branch=master)](https://github.com/mlr3learners/mlr3learners.coxboost/actions)
 [![codecov](https://codecov.io/gh/mlr3learners/mlr3learners.coxboost/branch/master/graph/badge.svg)](https://codecov.io/gh/mlr3learners/mlr3learners.coxboost)
 [![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr3-orange.svg)](https://stackoverflow.com/questions/tagged/mlr3)
