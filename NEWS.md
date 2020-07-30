@@ -1,3 +1,7 @@
+# mlr3learners.coxboost 0.1.2
+
+- distr6 patch
+
 # mlr3learners.coxboost 0.1.1
 
 - Removed remotes dependencies
